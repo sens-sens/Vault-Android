@@ -15,8 +15,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.savedstate.SavedStateRegistry
+import androidx.savedstate.SavedStateRegistryController
+import androidx.savedstate.SavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.androsmith.vault.R // Replace with your actual package name/resources
 import com.androsmith.vault.data.VaultDatabase
 import com.androsmith.vault.data.model.VaultContact
@@ -27,10 +44,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HeadsUpOverlayService : Service() {
+class HeadsUpOverlayService : Service(),
+    LifecycleOwner,
+    SavedStateRegistryOwner
+{
 
     private var windowManager: WindowManager? = null
+
+
+    private val _lifecycleRegistry = LifecycleRegistry(this)
+    private val _savedStateRegistryController: SavedStateRegistryController = SavedStateRegistryController.create(this)
+    override val savedStateRegistry: SavedStateRegistry = _savedStateRegistryController.savedStateRegistry
+    override val lifecycle: Lifecycle = _lifecycleRegistry
+
     private var overlayView: View? = null
+
+
 
     @Inject
     lateinit var database: VaultDatabase  // Inject your database
@@ -46,6 +75,10 @@ class HeadsUpOverlayService : Service() {
     override fun onCreate() {
         super.onCreate()
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+        _savedStateRegistryController.performAttach()
+        _savedStateRegistryController.performRestore(null)
+        _lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -80,20 +113,22 @@ class HeadsUpOverlayService : Service() {
             }
         }
     }
-private fun createOverlayView(contact: VaultContact) {
+    private fun createOverlayView(contact: VaultContact) {
         if (overlayView != null) {
-            removeOverlayView() // Remove existing view first
+            removeOverlayView()
         }
 
-        val layoutInflater = LayoutInflater.from(this)
-        overlayView = layoutInflater.inflate(R.layout.overlay_layout, null) // Create your overlay layout
+        _lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
+        _lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
-        // Customize your overlay layout (overlay_layout.xml)
-        val nameTextView = overlayView?.findViewById<TextView>(R.id.nameTextView)
-        val categoryTextView = overlayView?.findViewById<TextView>(R.id.categoryTextView)
-
-        nameTextView?.text = contact.name
-        categoryTextView?.text = contact.category ?: "Unknown Category"
+        overlayView = ComposeView(this).apply {
+            setViewTreeLifecycleOwner(this@HeadsUpOverlayService)
+            setViewTreeSavedStateRegistryOwner(this@HeadsUpOverlayService)
+            setContent {
+                // Your Compose UI for the overlay
+                OverlayContent(contact = contact)
+            }
+        }
 
         val layoutParams = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -110,19 +145,17 @@ private fun createOverlayView(contact: VaultContact) {
             PixelFormat.TRANSLUCENT
         )
 
-        layoutParams.gravity = Gravity.CENTER // Set gravity to center
-        layoutParams.x = 0 // Horizontal offset (0 for exact center)
-        layoutParams.y = 0 // Vertical offset (0 for exact center)
+        layoutParams.gravity = Gravity.CENTER
+        layoutParams.x = 0
+        layoutParams.y = 0
 
         try {
             windowManager?.addView(overlayView, layoutParams)
         } catch (e: Exception) {
             Log.e("HeadsUpOverlayService", "Error adding view: ${e.message}", e)
-            // Handle exception, e.g., if the user revoked the SYSTEM_ALERT_WINDOW permission *after* it was granted.
             CoroutineScope(Dispatchers.Main).launch {
-                stopSelf() // Stop the service if we can't add the view.
+                stopSelf()
             }
-
         }
     }
 
@@ -134,6 +167,10 @@ private fun createOverlayView(contact: VaultContact) {
                 // View not attached - that's fine
             }
             overlayView = null
+
+
+            _lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+            _lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         }
     }
 
@@ -141,5 +178,21 @@ private fun createOverlayView(contact: VaultContact) {
         removeOverlayView()
         windowManager = null
         super.onDestroy()
+        _lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    }
+}
+@Composable
+fun OverlayContent(contact: VaultContact) {
+    Column(modifier = Modifier.padding(8.dp)) {
+        Text(
+            text = contact.name,
+            color = Color.White,
+            fontSize = 16.sp
+        )
+        Text(
+            text = contact.category ?: "Unknown Category",
+            color = Color.Gray,
+            fontSize = 12.sp
+        )
     }
 }
