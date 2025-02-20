@@ -38,6 +38,16 @@ class AddContactsViewModel @Inject constructor(
         }
     }
 
+    fun toggleSearchVisibility() {
+
+        _uiState.update { currentState ->
+
+            currentState.copy(
+                searchVisibility = !currentState.searchVisibility
+            )
+        }
+    }
+
     fun addContactsToVault() {
 
         val vaultContacts: List<VaultContact> = _uiState.value.selectedContacts.toVaultContacts(

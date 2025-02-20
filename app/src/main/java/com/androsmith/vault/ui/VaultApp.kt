@@ -25,6 +25,7 @@ fun VaultApp(modifier: Modifier = Modifier) {
         }
         composable<Screens.AddContacts> {
             AddContactsScreen(
+                onNavigateBack = { navController.popBackStack()},
                 onContactsSaved = { navController.navigate(Screens.VaultList) }
             )
         }

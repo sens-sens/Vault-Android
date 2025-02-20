@@ -29,7 +29,6 @@ fun ContactTile(
             .fillMaxWidth()
             .clickable { onCheckedChange(!isChecked) }
             .padding(
-                horizontal = 4.dp,
                 vertical = 12.dp,
             ),
         verticalAlignment = Alignment.CenterVertically

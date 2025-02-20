@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.androsmith.vault.data.VaultDatabase
 import com.androsmith.vault.data.model.VaultContact
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,27 +33,68 @@ class PhoneStateReceiver : BroadcastReceiver() {
 
         if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
             val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+
             if (state == TelephonyManager.EXTRA_STATE_RINGING) {
-                @Suppress("DEPRECATION")
-                val phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
-                if (phoneNumber != null) {
+                var phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+
+                if (phoneNumber.isNullOrEmpty()) {
+                    // Try to get the number from call log (if permission granted)
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+                        phoneNumber = getLastIncomingCall(context) // Implement this function (see below)
+                        Log.d(tag, "Got number from call log: $phoneNumber")
+                    } else {
+                        Log.w(tag, "READ_CALL_LOG permission denied.")
+                        // Optionally, prompt the user to grant the permission
+                    }
+                }
+
+                if (!phoneNumber.isNullOrEmpty()) {
+                    Log.d(tag, "Incoming number: $phoneNumber")
                     CoroutineScope(Dispatchers.IO).launch {
                         checkAndShowNotification(context, phoneNumber)
                     }
                 } else {
-                    Log.e(tag, "Incoming number is null.")
+                    Log.e(tag, "Could not retrieve incoming number.")
                 }
             }
         }
-    }
 
+    }
+    // Function to retrieve the last incoming call number from call log
+    private fun getLastIncomingCall(context: Context): String? {
+        // Same implementation as in the previous response.
+        // Requires READ_CALL_LOG permission
+        return try {
+            val uri = android.provider.CallLog.Calls.CONTENT_URI
+            val projection = arrayOf(android.provider.CallLog.Calls.NUMBER)
+            val sortOrder = android.provider.CallLog.Calls.DATE + " DESC LIMIT 1" // Get only the last call
+            val cursor = context.contentResolver.query(uri, projection, null, null, sortOrder)
+
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val number = it.getString(it.getColumnIndexOrThrow(android.provider.CallLog.Calls.NUMBER))
+                    return number
+                }
+            }
+            null
+        } catch (e: SecurityException) {
+            Log.e("PhoneStateReceiver", "SecurityException accessing call log: ${e.message}")
+            null // Handle the case where READ_CALL_LOG permission is revoked during runtime
+        } catch (e: Exception) {
+            Log.e("PhoneStateReceiver", "Error reading call log: ${e.message}")
+            null // Generic error handling
+        }
+    }
     private suspend fun checkAndShowNotification(context: Context, phoneNumber: String) {
         val tag = "PhoneStateReceiver"
+        val normalizedPhoneNumber = PhoneNumberUtils.normalizePhoneNumber(phoneNumber) ?: phoneNumber
         try {
-            val contact = database.vaultContactDao().getVaultContactByNumber(phoneNumber)
+            val contact = database.vaultContactDao().getVaultContactByNumber(normalizedPhoneNumber)
 
             if (contact != null) {
                 showHeadsUpNotification(context, contact)
+            } else {
+                Log.d(tag, "Unsaved Contact")
             }
         } catch (e: Exception) {
             Log.e(tag, "Error checking and showing notification.", e)
