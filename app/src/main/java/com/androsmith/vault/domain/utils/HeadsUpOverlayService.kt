@@ -80,8 +80,7 @@ class HeadsUpOverlayService : Service() {
             }
         }
     }
-
-    private fun createOverlayView(contact: VaultContact) {
+private fun createOverlayView(contact: VaultContact) {
         if (overlayView != null) {
             removeOverlayView() // Remove existing view first
         }
@@ -100,27 +99,30 @@ class HeadsUpOverlayService : Service() {
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY // Modern way
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             } else {
-                WindowManager.LayoutParams.TYPE_PHONE // Deprecated but necessary for older versions
+                WindowManager.LayoutParams.TYPE_PHONE
             },
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or  // Important: Allows touch-through
-                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or  // Show on lock screen
-                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or // Dismiss keyguard
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
             PixelFormat.TRANSLUCENT
         )
 
-        layoutParams.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        layoutParams.x = 0
-        layoutParams.y = 100 // Adjust position
+        layoutParams.gravity = Gravity.CENTER // Set gravity to center
+        layoutParams.x = 0 // Horizontal offset (0 for exact center)
+        layoutParams.y = 0 // Vertical offset (0 for exact center)
 
         try {
             windowManager?.addView(overlayView, layoutParams)
         } catch (e: Exception) {
             Log.e("HeadsUpOverlayService", "Error adding view: ${e.message}", e)
             // Handle exception, e.g., if the user revoked the SYSTEM_ALERT_WINDOW permission *after* it was granted.
-            stopSelf() // Stop the service if we can't add the view.
+            CoroutineScope(Dispatchers.Main).launch {
+                stopSelf() // Stop the service if we can't add the view.
+            }
+
         }
     }
 
