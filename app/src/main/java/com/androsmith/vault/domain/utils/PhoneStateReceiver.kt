@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.androsmith.vault.MainActivity
 import com.androsmith.vault.data.VaultDatabase
 import com.androsmith.vault.data.model.VaultContact
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,18 @@ class PhoneStateReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var database: VaultDatabase
+
+
+
+    // Helper function to check if overlay permission is granted
+    private fun isOverlayPermissionGranted(context: Context): Boolean {
+        // Get a reference to the MainActivity to check the permission flag
+        val mainActivity = context as? MainActivity // Assumes PhoneStateReceiver is in the same package as MainActivity. Can also pass Context of MainActivity
+
+        return mainActivity?.isOverlayPermissionGranted() ?: false
+    }
+
+
 
     override fun onReceive(context: Context, intent: Intent) {
         val tag = "PhoneStateReceiver"
@@ -56,6 +69,10 @@ class PhoneStateReceiver : BroadcastReceiver() {
                 } else {
                     Log.e(tag, "Could not retrieve incoming number.")
                 }
+            } else if (state == TelephonyManager.EXTRA_STATE_IDLE || state == TelephonyManager.EXTRA_STATE_OFFHOOK) {
+                // Call ended, stop the overlay
+                val serviceIntent = Intent(context, HeadsUpOverlayService::class.java)
+                context.stopService(serviceIntent)  // Explicitly stop the service
             }
         }
 
@@ -85,6 +102,8 @@ class PhoneStateReceiver : BroadcastReceiver() {
             null // Generic error handling
         }
     }
+
+
     private suspend fun checkAndShowNotification(context: Context, phoneNumber: String) {
         val tag = "PhoneStateReceiver"
         val normalizedPhoneNumber = PhoneNumberUtils.normalizePhoneNumber(phoneNumber) ?: phoneNumber
@@ -92,7 +111,9 @@ class PhoneStateReceiver : BroadcastReceiver() {
             val contact = database.vaultContactDao().getVaultContactByNumber(normalizedPhoneNumber)
 
             if (contact != null) {
-                showHeadsUpNotification(context, contact)
+                val serviceIntent = Intent(context, HeadsUpOverlayService::class.java)
+                serviceIntent.putExtra(HeadsUpOverlayService.EXTRA_PHONE_NUMBER, phoneNumber) // Pass the number
+                context.startService(serviceIntent)
             } else {
                 Log.d(tag, "Unsaved Contact")
             }

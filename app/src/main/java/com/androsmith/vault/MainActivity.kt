@@ -13,10 +13,16 @@ import com.androsmith.vault.ui.VaultApp
 import com.androsmith.vault.ui.theme.VaultTheme
 import dagger.hilt.android.AndroidEntryPoint
 import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private var overlayPermissionGranted: Boolean = false
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
@@ -30,6 +36,15 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        if (!checkOverlayPermission(this)) {
+            requestOverlayPermission(this)
+        } else {
+            overlayPermissionGranted = true
+        }
+
+
+
         requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
@@ -52,6 +67,24 @@ class MainActivity : ComponentActivity() {
         }
 
         checkAndRequestPermissions()
+    } fun checkOverlayPermission(context: Context): Boolean {
+        return Settings.canDrawOverlays(context)
+    }
+
+    fun requestOverlayPermission(activity: Activity) {
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)  //No need to set the flag since we're starting activity from Activity
+
+            startActivity(intent)
+        }
+    }
+
+    fun isOverlayPermissionGranted(): Boolean {
+        return overlayPermissionGranted
     }
     private fun checkAndRequestPermissions() {
         val permissionsToRequest = mutableListOf<String>()

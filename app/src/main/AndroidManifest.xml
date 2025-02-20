@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".VaultApplication"
@@ -27,6 +28,11 @@
                 <action android:name="android.telephony.TelephonyManager.ACTION_PHONE_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+        <service
+        android:name=".domain.utils.HeadsUpOverlayService"
+        android:enabled="true"
+        android:exported="false"
+        android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
