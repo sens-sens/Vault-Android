@@ -73,6 +73,9 @@ dependencies {
     // Lib Phone Number
     implementation(libs.libphonenumber)
 
+    // Google Fonts
+    implementation(libs.androidx.ui.google.fonts)
+
 
     testImplementation(libs.junit)
 
