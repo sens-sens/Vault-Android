@@ -15,7 +15,7 @@ Vault is an Android app that allows you to create a private list of contacts, se
 * **Delete Contacts:** Remove contacts from the Vault.
 * **Search and Filter:** Easily find contacts within the Vault.
 * **Call Functionality:** Initiate calls to Vault contacts directly from the app.
-* **Customizable Call Notification:** Compose view based custom notification for incomming and outgoing calls.
+* **Customizable Call Notification:** Compose view based custom notification for incomming calls.
 
 ## Screenshots
 
@@ -33,7 +33,7 @@ Vault is an Android app that allows you to create a private list of contacts, se
 
 ## Installation and Setup
 
-1.  Clone the repository: `git clone [repository URL]`
+1.  Clone the repository: `git clone https://github.com/sens-sens/Vault-Android.git`
 2.  Open the project in Android Studio.
 3.  Sync Gradle files.
 4.  Build and run the app on an emulator or physical device.
@@ -51,7 +51,7 @@ The app requires the following permissions:
 * `READ_CONTACTS`: To access system contacts.
 * `WRITE_CONTACTS`: To hide/unhide contacts from system contacts.
 * `READ_PHONE_STATE`: To listen for phone state changes.
-* `READ_CALL_LOG`: To retrieve outgoing call numbers.
+* `READ_CALL_LOG`: To retrieve incoming call numbers.
 * `POST_NOTIFICATIONS`: To display notifications.
 
 ## Contributing
@@ -60,12 +60,12 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 ## License
 
-This project is licensed under the [License Name] License. See the `LICENSE` file for details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Author
 
-[Your Name/GitHub Username]
+[Sens](https://github.com/sens-sens)
 
 ## Contact
 
-For any questions or feedback, please feel free to contact me at [Your Email/Contact Information].
+For any questions or feedback, please feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/senthil-sens/).
