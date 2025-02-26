@@ -1,7 +1,7 @@
 # Vault: Private Contacts & Caller ID (Offline)
 
-<p align="start">
-  <img src="assets/app_icon.png" alt="Vault App Icon" width="180">
+<p align="center">
+  <img src="assets/app_icon.png" alt="Vault App Icon" width="200">
 </p>
 
 Vault is an Android app that allows you to create a private list of contacts, separate from your
