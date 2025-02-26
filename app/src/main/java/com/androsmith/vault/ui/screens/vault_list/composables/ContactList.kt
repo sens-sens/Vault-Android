@@ -63,7 +63,7 @@ fun ContactList(
                             onClick = {onContactEdit(contact)},
                             backgroundColor = actionBlue.copy(alpha = .3F),
                             icon = painterResource(R.drawable.edit),
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
                         )
                         ActionIcon(
                             onClick = {
@@ -78,7 +78,7 @@ fun ContactList(
                             },
                             backgroundColor = actionGreen.copy(alpha = .3F),
                             icon = painterResource(R.drawable.phone),
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
                         )
                         ActionIcon(
                             onClick = {
@@ -86,7 +86,7 @@ fun ContactList(
                             },
                             backgroundColor = actionRed.copy(alpha = .3F),
                             icon = painterResource(R.drawable.delete),
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
                         )
                     }
                 ) {

@@ -33,7 +33,7 @@ fun CallListenerSwitch() {
         },
         colors = SwitchDefaults.colors(
             uncheckedThumbColor = MaterialTheme.colorScheme.background,
-            uncheckedTrackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = .15F),
+            uncheckedTrackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = .12F),
             uncheckedBorderColor = Color.Transparent,
         )
     )

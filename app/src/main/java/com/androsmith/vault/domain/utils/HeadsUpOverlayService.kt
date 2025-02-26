@@ -225,12 +225,12 @@ private fun VaultCallNotificationCardPreview() {
 fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
   VaultTheme{  Card(
         colors = CardDefaults.cardColors(
-            MaterialTheme.colorScheme.background
+            Color(0xFF121618)
         )
         ,
         border = BorderStroke(1.dp,
 
-            MaterialTheme.colorScheme.primary
+            MaterialTheme.colorScheme.primary.copy(alpha = .4F)
             ),
         modifier = Modifier
             .fillMaxWidth()
@@ -238,18 +238,16 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
             .padding(horizontal = 16.dp)
             , elevation = CardDefaults.cardElevation(
             0.dp,
-        ), shape = RoundedCornerShape(16.dp)
+        ), shape = RoundedCornerShape(10.dp)
     ) {
         Column(
         ) {
             Row(modifier = Modifier
-                .background(
-                    MaterialTheme.colorScheme.inversePrimary
-                )
+
                 .fillMaxWidth()
                 .padding(
 
-                    start = 20.dp,
+                    start = 8.dp,
                 ),
 //                .padding(top = 16.dp, bottom = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -264,15 +262,14 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
                         painterResource(R.drawable.ic_launcher_foreground),
                         contentDescription = "Call Icon",
                         tint =
-                        MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.size(32.dp)
+                        Color.White,
+                        modifier = Modifier.size(48.dp)
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "Vault Contact", style = TextStyle(
                             fontSize = 20.sp,
                             color =
-                                    MaterialTheme.colorScheme.onBackground,
+                                Color.White
                         )
                     )
                 }
@@ -280,16 +277,17 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
                     onClick = onClose
                 ){
                     Icon(
-                        Icons.Default.Clear,
+                        painterResource(R.drawable.close),
                         contentDescription = "Close",
                         tint =
-                                MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.size(24.dp)
+                        Color.White,
+                        modifier = Modifier.size(28.dp)
                     )
                 }
             }
             HorizontalDivider(
-                color =MaterialTheme.colorScheme.primary
+                color =Color.White.copy(alpha = .2F),
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Column(
 
@@ -302,12 +300,14 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start ,modifier = Modifier.fillMaxWidth()) {
+                    horizontalArrangement = Arrangement.SpaceBetween ,modifier = Modifier.fillMaxWidth()) {
 
 
                     Text(
                     text = contact.name, style = TextStyle(
-                        fontSize = 21.sp, //fontWeight = FontWeight.Medium
+                        fontSize = 21.sp,
+color = Color.White
+                        //fontWeight = FontWeight.Medium
                     )
                 )
                     Spacer(Modifier.width(16.dp))
@@ -330,7 +330,7 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
                 TextStyle(
                     fontSize = 16.sp,
     //                fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7F)
+                    color = Color.White.copy(alpha = 0.7F)
                 )
                 )
                 Spacer(modifier = Modifier.height(14.dp))
