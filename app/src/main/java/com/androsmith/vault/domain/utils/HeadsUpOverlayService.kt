@@ -11,7 +11,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,29 +22,22 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,7 +59,6 @@ import javax.inject.Inject
 
 import com.androsmith.vault.R
 import com.androsmith.vault.ui.theme.VaultTheme
-import com.androsmith.vault.ui.theme.green
 
 @AndroidEntryPoint
 class HeadsUpOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner {
@@ -244,9 +235,10 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 80.dp)
+            .padding(horizontal = 16.dp)
             , elevation = CardDefaults.cardElevation(
             0.dp,
-        ), shape = RoundedCornerShape(12.dp)
+        ), shape = RoundedCornerShape(16.dp)
     ) {
         Column(
         ) {
@@ -269,13 +261,13 @@ fun VaultCallNotificationCard(contact: VaultContact, onClose: () -> Unit) {
                 ) {
 
                     Icon(
-                        painterResource(R.drawable.phone_calling_svgrepo_com),
+                        painterResource(R.drawable.ic_launcher_foreground),
                         contentDescription = "Call Icon",
                         tint =
                         MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(32.dp)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "Vault Contact", style = TextStyle(
                             fontSize = 20.sp,

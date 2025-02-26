@@ -28,6 +28,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.androsmith.vault.R
+
 @AndroidEntryPoint
 class PhoneStateForegroundService : Service() {
 
@@ -93,10 +95,10 @@ class PhoneStateForegroundService : Service() {
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Vault is Active")
-            .setContentText("Listening for calls...")
-            .setSmallIcon(android.R.drawable.ic_menu_call) // Replace with your app icon
+            .setContentText("Listening for calls")
+            .setSmallIcon(R.drawable.phone)
             .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
             .build()
     }
 

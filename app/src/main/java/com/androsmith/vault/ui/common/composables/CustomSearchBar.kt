@@ -2,6 +2,7 @@ package com.androsmith.vault.ui.common.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -18,9 +19,11 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.androsmith.vault.R
 
 @Composable
 fun CustomSearchBar(
@@ -37,9 +40,12 @@ fun CustomSearchBar(
             maxLines = 1,
             placeholder = { Text("Search contacts...") },
             leadingIcon = {
-                Icon(
-                    Icons.Rounded.Search, contentDescription = null
+               Icon(
+                        painterResource(R.drawable.search),
+                contentDescription = "Search",
+                modifier = Modifier.size(20.dp)
                 )
+
             },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {

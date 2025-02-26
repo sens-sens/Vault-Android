@@ -95,6 +95,9 @@ class MainActivity : ComponentActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             permissionsToRequest.add(Manifest.permission.READ_PHONE_STATE)
+            permissionsToRequest.add(Manifest.permission.READ_CALL_LOG)
+            permissionsToRequest.add(Manifest.permission.READ_CONTACTS)
+            permissionsToRequest.add(Manifest.permission.WRITE_CONTACTS)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(

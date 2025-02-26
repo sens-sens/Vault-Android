@@ -5,6 +5,7 @@ import com.androsmith.vault.data.datasource.LocalContactDataSource
 import com.androsmith.vault.data.datasource.SystemContactDataSource
 import com.androsmith.vault.data.model.VaultContact
 import com.androsmith.vault.domain.model.Contact
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ContactRepositoryImpl @Inject constructor(
@@ -15,7 +16,7 @@ class ContactRepositoryImpl @Inject constructor(
         localContactDataSource.insertVaultContact(contact)
     }
 
-    override suspend fun getVaultContacts(): List<VaultContact> {
+    override suspend fun getVaultContacts(): Flow<List<VaultContact>> {
         return localContactDataSource.getAllVaultContacts()
     }
 

@@ -31,13 +31,24 @@ class VaultListViewModel @Inject constructor(
 
     fun loadContacts() {
         viewModelScope.launch(Dispatchers.IO) {  // Use viewModelScope for coroutines
-            val contacts = contactRepository.getVaultContacts()
-            _allContacts.value = contacts // Store all contacts
-            _uiState.update { it.copy(contacts = contacts) }
+            contactRepository.getVaultContacts().collect { contacts ->
+                _allContacts.value = contacts // Store all contacts
+                _uiState.update { it.copy(contacts = contacts) }
+            }
+
         }
     }
 
-
+    fun onContactEdit(contact: VaultContact){
+        viewModelScope.launch(Dispatchers.IO){
+            contactRepository.updateVaultContact(contact)
+        }
+    }
+    fun onContactDelete(contact: VaultContact) {
+        viewModelScope.launch(Dispatchers.IO) {
+            contactRepository.deleteVaultContact(contact)
+        }
+    }
     fun onSearchQueryChange(query: String) {
         _uiState.update { it.copy(searchQuery = query) }
         filterContacts(query)

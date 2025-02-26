@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,13 +39,15 @@ fun AddContactsScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val viewModel: AddContactsViewModel = hiltViewModel<AddContactsViewModel>()
-    val uiState = viewModel.uiState.collectAsState().value
-
-    ContactsPermissionRequester(permission = Manifest.permission.READ_CONTACTS,
+       ContactsPermissionRequester(permission = Manifest.permission.READ_CONTACTS,
         onPermissionGranted = { /* Permission Granted Logic */ },
         onPermissionDenied = { /* Permission Denied Logic */ }) {
-        AddContactsContent(
+
+           val viewModel: AddContactsViewModel = hiltViewModel<AddContactsViewModel>()
+           val uiState = viewModel.uiState.collectAsState().value
+
+
+           AddContactsContent(
             uiState = uiState,
             onSubmitted = {
                 viewModel.addContactsToVault()
@@ -80,6 +80,9 @@ fun AddContactsContent(
         })
     }, topBar = {
         AddContactsAppBar(
+            text = if(uiState.selectedContacts.isEmpty()) "Add Contacts"
+            else "${uiState.selectedContacts.size} selected"
+            ,
             onNavigateBack = onNavigateBack,
             toggleSearchVisibility = toggleSearchVisibility
         )
@@ -110,7 +113,7 @@ fun AddContactsContent(
 //                )
             }
 
-            ContactList(
+            SelectableContactList(
                 contacts = uiState.contacts,
                 isChecked = { uiState.selectedContacts.contains(it)},
                 onContactCheckedChanged = onContactCheckedChange
@@ -121,14 +124,14 @@ fun AddContactsContent(
 }
 
 @Composable
-fun ContactList(
+fun SelectableContactList(
     contacts: List<Contact>,
     isChecked: (Contact) -> Boolean,
     onContactCheckedChanged: (Contact, Boolean) -> Unit,
     modifier: Modifier = Modifier) {
     val groupedContacts = contacts.groupBy { it.name.first().uppercaseChar() }
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
     ) {
         groupedContacts.forEach { (letter, contactsForLetter) ->
