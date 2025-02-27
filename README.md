@@ -22,7 +22,7 @@ offline, and allows you to hide or unhide them from your system contacts.
 
 ### Screenshots
 
-### Light Mode
+Light Mode
 
 <p align="center">
   <img src="assets/screenshots/vault_screen_light.png" alt="Light Mode Screenshot 1" width="250">
@@ -30,7 +30,7 @@ offline, and allows you to hide or unhide them from your system contacts.
   <img src="assets/screenshots/add_contacts_light.png" alt="Light Mode Screenshot 2" width="250">
 </p>
 
-### Dark Mode
+Dark Mode
 
 <p align="center">
   <img src="assets/screenshots/vault_screen_dark.png" alt="Dark Mode Screenshot 1" width="250">
@@ -38,13 +38,10 @@ offline, and allows you to hide or unhide them from your system contacts.
   <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Mode Screenshot 2" width="250">
 </p>
 
-### Notification Panel
+### Notification
 
 <p align="center">
 <img align="top" src="assets/screenshots/popup.png" alt="Notification Popup Screenshot" width="400">
-</p>
-<p align="center">
-  <img src="assets/screenshots/notification_panel.png" alt="Notification Panel Screenshot" width="400">
 </p>
 
 ## Technologies Used
