@@ -33,18 +33,19 @@ offline, and allows you to hide or unhide them from your system contacts.
 
 <br>
 <p align="center">
+  <img align="top" src="assets/screenshots/popup.png" alt="Notification Popup Screenshot" width="400">
+  <br>
+<i>(Notification)</i>
+</p>
+<br>
+<p align="center">
   <img src="assets/screenshots/vault_screen_dark.png" alt="Dark Mode Screenshot 1" width="250">
   <img src="assets/screenshots/vault_screen_swipe_dark.png" alt="Dark Mode Screenshot 3" width="250">
   <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Mode Screenshot 2" width="250">
   <br>
   <i>(Dark Mode)</i>
 </p>
-<br>
-<p align="center">
-  <img align="top" src="assets/screenshots/popup.png" alt="Notification Popup Screenshot" width="400">
-  <br>
-<i>(Notification)</i>
-</p>
+
 <br>
 
 ## Technologies Used
