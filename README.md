@@ -30,7 +30,6 @@ offline, and allows you to hide or unhide them from your system contacts.
   <img src="assets/screenshots/add_contacts_light.png" alt="Light Mode Screenshot 2" width="250">
 </p>
 
-
 ### Dark Mode
 
 <p align="center">
@@ -39,12 +38,11 @@ offline, and allows you to hide or unhide them from your system contacts.
   <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Mode Screenshot 2" width="250">
 </p>
 
-
 ### Notification Panel
 
 <p align="center">
   <img src="assets/screenshots/notification_panel.png" alt="Notification Panel Screenshot" width="300">
-  <img align="middle" src="assets/screenshots/popup.png" alt="Notification Panel Screenshot" width="400">
+  <img align="top" src="assets/screenshots/popup.png" alt="Notification Panel Screenshot" width="400">
 </p>
 
 ## Technologies Used
