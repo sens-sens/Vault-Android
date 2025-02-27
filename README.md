@@ -20,10 +20,31 @@ offline, and allows you to hide or unhide them from your system contacts.
 * **Call Functionality:** Initiate calls to Vault contacts directly from the app.
 * **Customizable Call Notification:** Compose view based custom notification for incomming calls.
 
-## Screenshots
+### Screenshots
 
-![Screenshot 1](path/to/screenshot1.png)
-![Screenshot 2](path/to/screenshot2.png)
+### Light Mode
+
+<p align="center">
+  <img src="assets/screenshots/vault_screen_light.png" alt="Light Mode Screenshot 1" width="300">
+  <img src="assets/screenshots/add_contacts_light.png" alt="Light Mode Screenshot 2" width="300">
+  <img src="assets/screenshots/vault_screen_swipe_light.png" alt="Light Mode Screenshot 3" width="300">
+</p>
+
+
+### Dark Mode
+
+<p align="center">
+  <img src="assets/screenshots/vault_screen_dark.png" alt="Dark Mode Screenshot 1" width="300">
+  <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Mode Screenshot 2" width="300">
+  <img src="assets/screenshots/vault_screen_swipe_dark.png" alt="Dark Mode Screenshot 3" width="300">
+</p>
+
+
+### Notification Panel
+
+<p align="center">
+  <img src="assets/screenshots/notification_panel.png" alt="Notification Panel Screenshot" width="300">
+</p>
 
 ## Technologies Used
 
