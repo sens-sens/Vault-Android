@@ -44,7 +44,7 @@ offline, and allows you to hide or unhide them from your system contacts.
 
 <p align="center">
   <img src="assets/screenshots/notification_panel.png" alt="Notification Panel Screenshot" width="300">
-  <img src="assets/screenshots/popup.png" alt="Notification Panel Screenshot" width="300">
+  <img align="top" src="assets/screenshots/popup.png" alt="Notification Panel Screenshot" width="500">
 </p>
 
 ## Technologies Used
