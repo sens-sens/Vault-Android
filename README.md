@@ -45,7 +45,7 @@ offline, and allows you to hide or unhide them from your system contacts.
   <br>
 <i>(Notification)</i>
 </p>
-
+<br>
 ## Technologies Used
 
 * **Kotlin:** The primary programming language.
@@ -66,7 +66,7 @@ offline, and allows you to hide or unhide them from your system contacts.
 
 ## APK Release
 
-You can download the latest release APK [here](link/to/your/release.apk).
+You can download the latest release APK [here](assets/vault-release.apk).
 
 ## Permissions
 
