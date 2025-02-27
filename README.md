@@ -19,7 +19,19 @@ offline, and allows you to hide or unhide them from your system contacts.
 * **Search and Filter:** Easily find contacts within the Vault.
 * **Call Functionality:** Initiate calls to Vault contacts directly from the app.
 * **Customizable Call Notification:** Compose view based custom notification for incomming calls.
+### Screenshots
 
+| Light Mode                                                                                       | Dark Mode                                                                                      |
+|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| <img src="assets/screenshots/vault_screen_light.png" alt="Light Vault Screen" width="250">       | <img src="assets/screenshots/vault_screen_dark.png" alt="Dark Vault Screen" width="250">       |
+| <img src="assets/screenshots/vault_screen_swipe_light.png" alt="Light Swipe Screen" width="250"> | <img src="assets/screenshots/vault_screen_swipe_dark.png" alt="Dark Swipe Screen" width="250"> |
+| <img src="assets/screenshots/add_contacts_light.png" alt="Light Add Contacts" width="250">       | <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Add Contacts" width="250">       |
+
+### Notification Panel
+
+<p align="center">
+  <img src="assets/screenshots/notification_panel.png" alt="Notification Panel" width="300">
+</p>
 ### Screenshots
 
 ### Light Mode
