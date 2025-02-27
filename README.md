@@ -46,6 +46,7 @@ offline, and allows you to hide or unhide them from your system contacts.
 <i>(Notification)</i>
 </p>
 <br>
+
 ## Technologies Used
 
 * **Kotlin:** The primary programming language.
