@@ -25,18 +25,18 @@ offline, and allows you to hide or unhide them from your system contacts.
 ### Light Mode
 
 <p align="center">
-  <img src="assets/screenshots/vault_screen_light.png" alt="Light Mode Screenshot 1" width="300">
-  <img src="assets/screenshots/add_contacts_light.png" alt="Light Mode Screenshot 2" width="300">
-  <img src="assets/screenshots/vault_screen_swipe_light.png" alt="Light Mode Screenshot 3" width="300">
+  <img src="assets/screenshots/add_contacts_light.png" alt="Light Mode Screenshot 2" width="200">
+  <img src="assets/screenshots/vault_screen_light.png" alt="Light Mode Screenshot 1" width="200">
+  <img src="assets/screenshots/vault_screen_swipe_light.png" alt="Light Mode Screenshot 3" width="200">
 </p>
 
 
 ### Dark Mode
 
 <p align="center">
-  <img src="assets/screenshots/vault_screen_dark.png" alt="Dark Mode Screenshot 1" width="300">
-  <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Mode Screenshot 2" width="300">
-  <img src="assets/screenshots/vault_screen_swipe_dark.png" alt="Dark Mode Screenshot 3" width="300">
+  <img src="assets/screenshots/add_contacts_dark.png" alt="Dark Mode Screenshot 2" width="200">
+  <img src="assets/screenshots/vault_screen_dark.png" alt="Dark Mode Screenshot 1" width="200">
+  <img src="assets/screenshots/vault_screen_swipe_dark.png" alt="Dark Mode Screenshot 3" width="200">
 </p>
 
 
