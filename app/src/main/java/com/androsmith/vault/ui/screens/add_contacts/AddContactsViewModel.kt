@@ -2,12 +2,14 @@ package com.androsmith.vault.ui.screens.add_contacts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.androsmith.vault.data.datasource.LocalUserPreferenceDataSource
 import com.androsmith.vault.data.model.VaultContact
 import com.androsmith.vault.data.repository.ContactRepository
 import com.androsmith.vault.domain.model.Contact
 import com.androsmith.vault.domain.model.toVaultContacts
 import com.androsmith.vault.domain.utils.PhoneNumberUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,15 +21,19 @@ import javax.inject.Inject
 @HiltViewModel
 class AddContactsViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
+    private val preferenceDataSource: LocalUserPreferenceDataSource,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ContactUiState())
     private val _allContacts = MutableStateFlow<List<Contact>>(emptyList()) // Store the original list
 
+    private var _defaultCategory = "College"
+
     val uiState: StateFlow<ContactUiState> = _uiState.asStateFlow()
 
     init {
         loadContacts()
+        loadDefaultCategory()
     }
 
     fun loadContacts() {
@@ -48,10 +54,17 @@ class AddContactsViewModel @Inject constructor(
         }
     }
 
+    fun loadDefaultCategory() {
+        viewModelScope.launch(Dispatchers.IO)    {
+            preferenceDataSource.defaultCategory.collect { category ->
+                _defaultCategory = category ?: _defaultCategory
+            }
+        }
+    }
     fun addContactsToVault() {
 
         val vaultContacts: List<VaultContact> = _uiState.value.selectedContacts.toVaultContacts(
-        category = "Default",  // Or get the category from the UI
+        category = _defaultCategory,  // Or get the category from the UI
         isHidden = false       // Or get the isHidden value from the UI
     )
         viewModelScope.launch {

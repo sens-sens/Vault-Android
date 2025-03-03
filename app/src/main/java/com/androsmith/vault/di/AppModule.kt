@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.androsmith.vault.data.VaultContactDao
 import com.androsmith.vault.data.VaultDatabase
 import com.androsmith.vault.data.datasource.LocalContactDataSource
+import com.androsmith.vault.data.datasource.LocalUserPreferenceDataSource
 import com.androsmith.vault.data.datasource.SystemContactDataSource
 import com.androsmith.vault.data.repository.ContactRepository
 import com.androsmith.vault.data.repository.ContactRepositoryImpl
@@ -34,6 +35,10 @@ object AppModule {
         return database.vaultContactDao()
     }
 
+    @Provides
+    fun provideUserPreference(@ApplicationContext context: Context): LocalUserPreferenceDataSource {
+        return LocalUserPreferenceDataSource(context)
+    }
     @Provides
     @Singleton
     fun provideContactRepository(

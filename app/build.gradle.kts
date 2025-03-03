@@ -23,7 +23,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -76,7 +76,11 @@ dependencies {
     // Google Fonts
     implementation(libs.androidx.ui.google.fonts)
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences.core)
+    implementation(libs.androidx.datastore.core)
 
+    implementation(libs.androidx.datastore.preferences.v100)
 
     testImplementation(libs.junit)
 
